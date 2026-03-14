@@ -350,7 +350,8 @@ def load_flat_samples(filename, feat_type, label_type, augment_feats, normalize_
     with gzip.open(filename, 'rb') as file:
         sample = pickle.load(file)
 
-    state, khalil_state, best_cand, cands, cand_scores = sample['data']
+    raw_data = sample['data']
+    state, khalil_state, best_cand, cands, cand_scores, cutoffbound = raw_data
 
     cands = np.array(cands)
     cand_scores = np.array(cand_scores)
@@ -384,4 +385,4 @@ def load_flat_samples(filename, feat_type, label_type, augment_feats, normalize_
     else:
         raise ValueError(f"Invalid label type: '{label_type}'")
 
-    return cand_states, cand_labels, best_cand_idx
+    return cand_states, cand_labels, best_cand_idx, cutoffbound
